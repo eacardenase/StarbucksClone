@@ -19,8 +19,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
 
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = ViewController()
+        
+        let homeVC = HomeViewController()
+        let scanVC = ScanViewController()
+        let orderVC = OrderViewController()
+        let giftVC = GiftViewController()
+        let storesVC = StoreViewController()
 
+        let tabBar = UITabBarController()
+
+        tabBar.tabBar.isTranslucent = false
+        tabBar.viewControllers = [
+            homeVC,
+            scanVC,
+            orderVC,
+            giftVC,
+            storesVC,
+        ]
+
+        window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
     }
 
