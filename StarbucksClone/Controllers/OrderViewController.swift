@@ -31,6 +31,8 @@ class OrderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = "Order"
+
         view.backgroundColor = .systemOrange
     }
 

@@ -31,6 +31,8 @@ class ScanViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = "Scan"
+
         view.backgroundColor = .systemIndigo
     }
 

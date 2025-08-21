@@ -30,6 +30,29 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .systemPink
+
+        navigationItem.title = "Good afternoon, Edwin ☀️"
+
+        setupNavBar()
+    }
+
+}
+
+// MARK: - Helpers
+
+extension HomeViewController {
+
+    private func setupNavBar() {
+        guard
+            let fontDescriptor: UIFontDescriptor = .preferredFontDescriptor(
+                withTextStyle: .title1
+            ).withSymbolicTraits(.traitBold)
+        else { return }
+
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [
+            .font: UIFont(descriptor: fontDescriptor, size: 0)
+        ]
     }
 
 }

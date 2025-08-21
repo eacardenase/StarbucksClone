@@ -31,6 +31,8 @@ class GiftViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = "Gift"
+
         view.backgroundColor = .systemGreen
     }
 

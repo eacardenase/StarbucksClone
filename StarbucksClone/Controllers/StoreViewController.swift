@@ -31,6 +31,8 @@ class StoreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.title = "Store"
+
         view.backgroundColor = .systemTeal
     }
 

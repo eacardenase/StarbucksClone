@@ -26,15 +26,40 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let giftVC = GiftViewController()
         let storesVC = StoreViewController()
 
+        let homeNavigationController = UINavigationController(
+            rootViewController: homeVC
+        )
+        homeNavigationController.navigationBar.isTranslucent = false
+
+        let scanNavigationController = UINavigationController(
+            rootViewController: scanVC
+        )
+        scanNavigationController.navigationBar.isTranslucent = false
+
+        let orderNavigationController = UINavigationController(
+            rootViewController: orderVC
+        )
+        orderNavigationController.navigationBar.isTranslucent = false
+
+        let giftNavigationController = UINavigationController(
+            rootViewController: giftVC
+        )
+        giftNavigationController.navigationBar.isTranslucent = false
+
+        let storeNavigationController = UINavigationController(
+            rootViewController: storesVC
+        )
+        storeNavigationController.navigationBar.isTranslucent = false
+
         let tabBar = UITabBarController()
 
         tabBar.tabBar.isTranslucent = false
         tabBar.viewControllers = [
-            homeVC,
-            scanVC,
-            orderVC,
-            giftVC,
-            storesVC,
+            homeNavigationController,
+            scanNavigationController,
+            orderNavigationController,
+            giftNavigationController,
+            storeNavigationController,
         ]
 
         window?.rootViewController = tabBar
