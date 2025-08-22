@@ -9,6 +9,10 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    // MARK: - Properties
+
+    let homeHeaderView = HomeHeaderView()
+
     // MARK: - Initializers
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)
@@ -29,11 +33,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemPink
+        view.backgroundColor = .systemBackground
 
-        navigationItem.title = "Good afternoon, Edwin ☀️"
-
-        setupNavBar()
+        setupViews()
     }
 
 }
@@ -41,6 +43,25 @@ class HomeViewController: UIViewController {
 // MARK: - Helpers
 
 extension HomeViewController {
+
+    private func setupViews() {
+        view.addSubview(homeHeaderView)
+
+        NSLayoutConstraint.activate([
+            homeHeaderView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
+            homeHeaderView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: 16
+            ),
+            homeHeaderView.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: -16
+            ),
+        ])
+
+    }
 
     private func setupNavBar() {
         guard

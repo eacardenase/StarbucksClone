@@ -26,11 +26,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let giftVC = GiftViewController()
         let storesVC = StoreViewController()
 
-        let homeNavigationController = UINavigationController(
-            rootViewController: homeVC
-        )
-        homeNavigationController.navigationBar.isTranslucent = false
-
         let scanNavigationController = UINavigationController(
             rootViewController: scanVC
         )
@@ -55,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         tabBar.tabBar.isTranslucent = false
         tabBar.viewControllers = [
-            homeNavigationController,
+            homeVC,
             scanNavigationController,
             orderNavigationController,
             giftNavigationController,
