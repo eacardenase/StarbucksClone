@@ -12,6 +12,7 @@ class HomeViewController: UIViewController {
     // MARK: - Properties
 
     let homeHeaderView = HomeHeaderView()
+    var homeHeaderViewTopConstraint = NSLayoutConstraint()
 
     lazy var tableView: UITableView = {
         let _tableView = UITableView()
@@ -20,7 +21,7 @@ class HomeViewController: UIViewController {
         _tableView.dataSource = self
         _tableView.delegate = self
         _tableView.rowHeight = 300
-        
+
         _tableView.register(
             UITableViewCell.self,
             forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self)
@@ -72,11 +73,13 @@ extension HomeViewController {
         view.addSubview(homeHeaderView)
         view.addSubview(tableView)
 
+        homeHeaderViewTopConstraint = homeHeaderView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor
+        )
+
         // homeHeaderView
         NSLayoutConstraint.activate([
-            homeHeaderView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor
-            ),
+            homeHeaderViewTopConstraint,
             homeHeaderView.leadingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.leadingAnchor,
                 constant: 16
@@ -149,5 +152,43 @@ extension HomeViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension HomeViewController: UITableViewDelegate {
+
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension HomeViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let y = scrollView.contentOffset.y
+
+        let headerViewHeight = homeHeaderView.frame.height
+        let labelHeight = homeHeaderView.greetingLabel.frame.height
+        let buttonHeight = homeHeaderView.inboxButton.frame.height + 24
+
+        let swipingDown = y <= 0
+        let shouldSnapLabel = y > 0
+        let shouldSnapButton = y > buttonHeight
+
+        UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
+            self.homeHeaderView.greetingLabel.alpha = swipingDown ? 1.0 : 0.0
+
+            self.homeHeaderViewTopConstraint.constant =
+                shouldSnapLabel ? -labelHeight : 0
+
+            self.view.layoutIfNeeded()
+        }.startAnimation()
+
+        UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
+            self.homeHeaderView.inboxButton.alpha = y < buttonHeight ? 1 : 0
+
+            self.homeHeaderViewTopConstraint.constant =
+                shouldSnapButton
+                ? -headerViewHeight
+                : shouldSnapLabel ? -labelHeight : 0
+
+            self.view.layoutIfNeeded()
+        }.startAnimation()
+    }
 
 }
