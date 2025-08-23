@@ -48,6 +48,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let tabBar = UITabBarController()
 
+        tabBar.tabBar.tintColor = .systemGreen
         tabBar.tabBar.isTranslucent = false
         tabBar.viewControllers = [
             homeVC,

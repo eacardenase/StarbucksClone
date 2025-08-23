@@ -31,7 +31,14 @@ class HomeHeaderView: UIView {
         button.setTitleColor(.label, for: .normal)
 
         var conf = UIButton.Configuration.plain()
-        conf.imagePadding = 8
+        conf.imagePadding = 16
+        conf.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 0,
+            trailing: 0
+        )
+
         button.configuration = conf
 
         button.setImage(

@@ -74,7 +74,8 @@ extension HomeViewController {
         view.addSubview(tableView)
 
         homeHeaderViewTopConstraint = homeHeaderView.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: 16
         )
 
         // homeHeaderView
