@@ -14,14 +14,31 @@ class HomeViewController: UIViewController {
     let homeHeaderView = HomeHeaderView()
     var homeHeaderViewTopConstraint = NSLayoutConstraint()
 
+    lazy var scrollView: UIScrollView = {
+        let _scrollView = UIScrollView()
 
+        _scrollView.translatesAutoresizingMaskIntoConstraints = false
+        _scrollView.delegate = self
+
+        return _scrollView
+    }()
+
+    let stackView: UIStackView = {
+        let _stackView = UIStackView()
+
+        _stackView.translatesAutoresizingMaskIntoConstraints = false
+        _stackView.axis = .vertical
+        _stackView.spacing = 8
+
+        return _stackView
+    }()
 
     let tiles = [
-        "Star balance",
-        "Bonus stars",
-        "Try these",
-        "Welcome back",
-        "Uplifting",
+        TileView("Star balance"),
+        TileView("Bonus stars"),
+        TileView("Try these"),
+        TileView("Welcome back"),
+        TileView("Uplifting"),
     ]
 
     // MARK: - Initializers
@@ -58,6 +75,16 @@ extension HomeViewController {
     private func setupViews() {
         view.addSubview(homeHeaderView)
 
+        view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
+
+        for tile in tiles {
+            addChild(tile)
+            tile.didMove(toParent: self)
+
+            stackView.addArrangedSubview(tile.view)
+        }
+
         homeHeaderViewTopConstraint = homeHeaderView.topAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.topAnchor,
             constant: 16
@@ -75,6 +102,41 @@ extension HomeViewController {
                 constant: -16
             ),
         ])
+
+        // scrollView
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(
+                equalTo: homeHeaderView.bottomAnchor,
+                constant: 8
+            ),
+            scrollView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: 8
+            ),
+            scrollView.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: -8
+            ),
+            scrollView.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor
+            ),
+        ])
+
+        // stackView
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            stackView.leadingAnchor.constraint(
+                equalTo: scrollView.leadingAnchor
+            ),
+            stackView.trailingAnchor.constraint(
+                equalTo: scrollView.trailingAnchor
+            ),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+
+        ])
+
+        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            .isActive = true
     }
 
     private func setupNavBar() {
