@@ -2,35 +2,87 @@
 //  TileView.swift
 //  StarbucksClone
 //
-//  Created by Edwin Cardenas on 8/25/25.
+//  Created by Edwin Cardenas on 8/26/25.
 //
 
 import UIKit
 
-class TileView: UIViewController {
+class TileView: UIView {
 
-    lazy var label: UILabel = {
-        let _label = UILabel()
+    // MARK: - Properties
 
-        _label.translatesAutoresizingMaskIntoConstraints = false
+    let imageView: UIImageView = {
+        let _imageView = UIImageView(image: UIImage(resource: .meatless))
 
-        return _label
+        _imageView.translatesAutoresizingMaskIntoConstraints = false
+        _imageView.contentMode = .scaleAspectFill
+        _imageView.clipsToBounds = true
+
+        return _imageView
     }()
 
-    // MARK: View Lifecycle
+    let titleLabel: UILabel = {
+        let label = UILabel()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+        guard
+            let fontDescriptor: UIFontDescriptor = .preferredFontDescriptor(
+                withTextStyle: .title3
+            ).withSymbolicTraits(.traitBold)
+        else {
+            fatalError("Could not create font descriptor with bold trait.")
+        }
 
-        setupViews()
-    }
+        label.font = UIFont(descriptor: fontDescriptor, size: 0)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Breakfast made meatless"
+
+        return label
+    }()
+
+    let subtitleLabel: UILabel = {
+        let label = UILabel()
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.font = .preferredFont(forTextStyle: .footnote)
+        label.text = """
+            Try the Beyond Meat, Cheddar & Egg Breakfast Sandwich. \
+            Vegetarian and protein-packed.
+            """
+
+        return label
+    }()
+
+    let ctaButton: UIButton = {
+        var conf = UIButton.Configuration.filled()
+
+        conf.cornerStyle = .capsule
+        conf.baseBackgroundColor = .systemGreen
+        conf.title = "Order"
+        conf.contentInsets = NSDirectionalEdgeInsets(
+            top: 8,
+            leading: 16,
+            bottom: 8,
+            trailing: 16
+        )
+
+        let button = UIButton(type: .custom)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.minimumScaleFactor = 0.7
+        button.configuration = conf
+
+        return button
+    }()
 
     // MARK: - Initializers
 
-    init(_ text: String) {
-        super.init(nibName: nil, bundle: nil)
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
 
-        self.label.text = text
+        setupViews()
     }
 
     required init?(coder: NSCoder) {
@@ -39,23 +91,64 @@ class TileView: UIViewController {
 
 }
 
-// MARK: - Helpers
-
 extension TileView {
 
     private func setupViews() {
-        view.backgroundColor = .systemYellow
+        addSubview(imageView)
+        addSubview(titleLabel)
+        addSubview(subtitleLabel)
+        addSubview(ctaButton)
 
-        view.addSubview(label)
-
-        // label
+        // imageView
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageView.topAnchor.constraint(equalTo: topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
 
+        // titleLabel
         NSLayoutConstraint.activate([
-            view.heightAnchor.constraint(equalToConstant: 300)
+            titleLabel.topAnchor.constraint(
+                equalTo: imageView.bottomAnchor,
+                constant: 16
+            ),
+            titleLabel.leadingAnchor.constraint(
+                equalTo: leadingAnchor,
+                constant: 16
+            ),
+            titleLabel.trailingAnchor.constraint(
+                equalTo: trailingAnchor,
+                constant: -16
+            ),
+        ])
+
+        // subtitleLabel
+        NSLayoutConstraint.activate([
+            subtitleLabel.topAnchor.constraint(
+                equalTo: titleLabel.bottomAnchor,
+                constant: 16
+            ),
+            subtitleLabel.leadingAnchor.constraint(
+                equalTo: titleLabel.leadingAnchor
+            ),
+            subtitleLabel.trailingAnchor.constraint(
+                equalTo: titleLabel.trailingAnchor
+            ),
+        ])
+
+        // ctaButton
+        NSLayoutConstraint.activate([
+            ctaButton.topAnchor.constraint(
+                equalTo: subtitleLabel.bottomAnchor,
+                constant: 16
+            ),
+            ctaButton.leadingAnchor.constraint(
+                equalTo: titleLabel.leadingAnchor
+            ),
+            ctaButton.bottomAnchor.constraint(
+                equalTo: bottomAnchor,
+                constant: -16
+            ),
         ])
     }
 

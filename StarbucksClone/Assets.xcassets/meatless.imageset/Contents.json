@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "meatless.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
 
         _scrollView.translatesAutoresizingMaskIntoConstraints = false
         _scrollView.delegate = self
+        _scrollView.backgroundColor = .systemGroupedBackground
 
         return _scrollView
     }()
@@ -34,11 +35,12 @@ class HomeViewController: UIViewController {
     }()
 
     let tiles = [
-        TileView("Star balance"),
-        TileView("Bonus stars"),
-        TileView("Try these"),
-        TileView("Welcome back"),
-        TileView("Uplifting"),
+        TileViewController(),
+        PlaceholderViewController("Star balance"),
+        PlaceholderViewController("Bonus stars"),
+        PlaceholderViewController("Try these"),
+        PlaceholderViewController("Welcome back"),
+        PlaceholderViewController("Uplifting"),
     ]
 
     // MARK: - Initializers
