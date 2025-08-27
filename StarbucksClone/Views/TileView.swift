@@ -12,10 +12,10 @@ class TileView: UIView {
     // MARK: - Properties
 
     let imageView: UIImageView = {
-        let _imageView = UIImageView(image: UIImage(resource: .meatless))
+        let _imageView = UIImageView()
 
         _imageView.translatesAutoresizingMaskIntoConstraints = false
-        _imageView.contentMode = .scaleAspectFill
+        _imageView.contentMode = .scaleAspectFit
         _imageView.clipsToBounds = true
 
         return _imageView
@@ -34,7 +34,6 @@ class TileView: UIView {
 
         label.font = UIFont(descriptor: fontDescriptor, size: 0)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Breakfast made meatless"
 
         return label
     }()
@@ -46,10 +45,6 @@ class TileView: UIView {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.font = .preferredFont(forTextStyle: .footnote)
-        label.text = """
-            Try the Beyond Meat, Cheddar & Egg Breakfast Sandwich. \
-            Vegetarian and protein-packed.
-            """
 
         return label
     }()

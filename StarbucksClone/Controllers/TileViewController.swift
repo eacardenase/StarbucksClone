@@ -19,6 +19,20 @@ class TileViewController: UIViewController {
         return view
     }()
 
+    // MARK: - Initializers
+
+    init(title: String, subtitle: String, imageResource: ImageResource) {
+        super.init(nibName: nil, bundle: nil)
+
+        tileView.titleLabel.text = title
+        tileView.subtitleLabel.text = subtitle
+        tileView.imageView.image = UIImage(resource: imageResource)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
