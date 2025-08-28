@@ -1,0 +1,53 @@
+//
+//  RewardsTileViewController.swift
+//  StarbucksClone
+//
+//  Created by Edwin Cardenas on 8/27/25.
+//
+
+import UIKit
+
+class RewardTileViewController: UIViewController {
+
+    // MARK: - Properties
+
+    let rewardTileView: UIView = {
+        let view = RewardTileView()
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemPink
+
+        return view
+    }()
+
+    // MARK: - View Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupViews()
+    }
+
+}
+
+// MARK: - Helpers
+
+extension RewardTileViewController {
+
+    private func setupViews() {
+        view.addSubview(rewardTileView)
+
+        // rewardTileView
+        NSLayoutConstraint.activate([
+            rewardTileView.topAnchor.constraint(equalTo: view.topAnchor),
+            rewardTileView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor
+            ),
+            rewardTileView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor
+            ),
+            rewardTileView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+    }
+
+}

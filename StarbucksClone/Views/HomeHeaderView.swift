@@ -15,7 +15,7 @@ class HomeHeaderView: UIView {
         let label = UILabel()
 
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Good afternoon, Jonathan ☀️"
+        label.text = "Good afternoon, \nEdwin ☀️"
         label.font = .preferredFont(forTextStyle: .largeTitle)
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping

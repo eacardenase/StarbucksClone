@@ -41,6 +41,7 @@ class HomeViewController: UIViewController {
     }()
 
     let tiles = [
+        RewardTileViewController(),
         TileViewController(
             title: "Breakfast made meatless",
             subtitle: """
