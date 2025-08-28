@@ -29,6 +29,13 @@ class HomeViewController: UIViewController {
         _stackView.translatesAutoresizingMaskIntoConstraints = false
         _stackView.axis = .vertical
         _stackView.spacing = 8
+        _stackView.isLayoutMarginsRelativeArrangement = true
+        _stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 16,
+            trailing: 8
+        )
 
         return _stackView
     }()
