@@ -74,7 +74,7 @@ class TileView: UIView {
 
     private var shadowLayer = CAShapeLayer()
     private var cornerRadius: CGFloat = 8
-    private var fillColor: UIColor = .white
+    private var fillColor: UIColor = .systemBackground
 
     // MARK: - Initializers
 
@@ -161,7 +161,7 @@ extension TileView {
 
     private func addShadow() {
         shadowLayer.fillColor = fillColor.cgColor
-        shadowLayer.shadowColor = UIColor.black.cgColor
+        shadowLayer.shadowColor = UIColor.label.cgColor
         shadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         shadowLayer.shadowOpacity = 0.2
         shadowLayer.shadowRadius = 1
