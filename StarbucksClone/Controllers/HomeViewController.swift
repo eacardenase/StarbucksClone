@@ -19,6 +19,7 @@ class HomeViewController: UIViewController {
 
         _scrollView.translatesAutoresizingMaskIntoConstraints = false
         _scrollView.delegate = self
+        _scrollView.showsVerticalScrollIndicator = false
 
         return _scrollView
     }()
@@ -32,7 +33,7 @@ class HomeViewController: UIViewController {
         _stackView.isLayoutMarginsRelativeArrangement = true
         _stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
             top: 0,
-            leading: 0,
+            leading: 8,
             bottom: 16,
             trailing: 8
         )
@@ -46,7 +47,7 @@ class HomeViewController: UIViewController {
             title: "Breakfast made meatless",
             subtitle: """
                 Try the Beyond Meat, Cheddar & Egg Breakfast Sandwich. \
-                Vegetarian and protein-packed.                
+                Vegetarian and protein-packed.
                 """,
             imageResource: .meatless
         ),
@@ -54,14 +55,14 @@ class HomeViewController: UIViewController {
             title: "Uplifting our communities",
             subtitle: """
                 Thanks to our partners' nominations, The Starbucks Foundation \
-                is donating $145K to more than 50 local charities.                
+                is donating $145K to more than 50 local charities.
                 """,
             imageResource: .communities
         ),
         TileViewController(
             title: "Spend at least $15 for 50 Bonus Stars",
             subtitle: """
-                Collect 50 Bonus Stars when you spend at least $15 pre-tax.                
+                Collect 50 Bonus Stars when you spend at least $15 pre-tax.
                 """,
             imageResource: .bonus
         ),
