@@ -86,11 +86,13 @@ extension BalanceView {
 
         // starImgeView
         NSLayoutConstraint.activate([
-            starImgeView.topAnchor.constraint(equalTo: pointsLabel.topAnchor),
             starImgeView.leadingAnchor.constraint(
                 equalTo: pointsLabel.trailingAnchor
             ),
-
+            starImgeView.centerYAnchor.constraint(
+                equalTo: pointsLabel.centerYAnchor,
+                constant: -4
+            ),
         ])
 
         // starBalanceLabel
