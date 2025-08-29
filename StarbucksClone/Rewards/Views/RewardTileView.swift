@@ -17,6 +17,100 @@ class RewardTileView: UIView {
         return view
     }()
 
+    lazy var rewardsButton: UIButton = {
+        let button = UIButton(type: .custom)
+        var config = UIButton.Configuration.plain()
+
+        config.image = UIImage(systemName: "chevron.down")?
+            .withConfiguration(
+                UIImage.SymbolConfiguration(scale: .small)
+            )
+        config.imagePlacement = .trailing
+        config.imagePadding = 8
+        config.baseForegroundColor = .label
+        config.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 0,
+            trailing: 0
+        )
+
+        let attributedTitle = NSAttributedString(
+            string: "Rewards options",
+            attributes: [
+                .font: UIFont.preferredFont(forTextStyle: .footnote)
+            ]
+        )
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        button.configuration = config
+
+        button.addTarget(
+            self,
+            action: #selector(rewardsOptionsTapped),
+            for: .touchUpInside
+        )
+
+        return button
+    }()
+
+    let rewardsGraphView: UIView = {
+        let view = UIView()
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemRed.withAlphaComponent(0.3)
+
+        return view
+    }()
+
+    let starRewardsView: UIView = {
+        let view = UIView()
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGreen.withAlphaComponent(0.3)
+
+        return view
+    }()
+
+    let detailsButton: UIButton = {
+        let button = UIButton(type: .system)
+        var config = UIButton.Configuration.plain()
+
+        config.contentInsets = NSDirectionalEdgeInsets(
+            top: 8,
+            leading: 16,
+            bottom: 8,
+            trailing: 16
+        )
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.configuration = config
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.systemGreen.cgColor
+        button.layer.cornerRadius = 20
+
+        guard
+            let fontDescriptor: UIFontDescriptor = .preferredFontDescriptor(
+                withTextStyle: .body
+            ).withSymbolicTraits(.traitBold)
+        else {
+            fatalError("Could not create font descriptor with trait bold")
+        }
+
+        let attributedTitle = NSAttributedString(
+            string: "Details",
+            attributes: [
+                .font: UIFont(descriptor: fontDescriptor, size: 0),
+                .foregroundColor: UIColor.systemGreen,
+            ]
+        )
+
+        button.setAttributedTitle(attributedTitle, for: .normal)
+
+        return button
+    }()
+
     // MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -41,6 +135,10 @@ extension RewardTileView {
 
     private func setupViews() {
         addSubview(balanceView)
+        addSubview(rewardsButton)
+        addSubview(rewardsGraphView)
+        addSubview(starRewardsView)
+        addSubview(detailsButton)
 
         // balanceView
         NSLayoutConstraint.activate([
@@ -48,6 +146,70 @@ extension RewardTileView {
             balanceView.leadingAnchor.constraint(equalTo: leadingAnchor),
         ])
 
+        // rewardsButton
+        NSLayoutConstraint.activate([
+            rewardsButton.centerYAnchor.constraint(
+                equalTo: balanceView.pointsLabel.centerYAnchor
+            ),
+            rewardsButton.trailingAnchor.constraint(
+                equalTo: trailingAnchor,
+            ),
+        ])
+
+        // rewardsGraphView
+        NSLayoutConstraint.activate([
+            rewardsGraphView.topAnchor.constraint(
+                equalTo: balanceView.bottomAnchor,
+                constant: 8
+            ),
+            rewardsGraphView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            rewardsGraphView.widthAnchor.constraint(
+                equalTo: widthAnchor
+            ),
+            rewardsGraphView.heightAnchor.constraint(equalToConstant: 100),
+        ])
+
+        // starRewardsView
+        NSLayoutConstraint.activate([
+            starRewardsView.topAnchor.constraint(
+                equalTo: rewardsGraphView.bottomAnchor,
+                constant: 8
+            ),
+            starRewardsView.leadingAnchor.constraint(
+                equalTo: leadingAnchor,
+                constant: 8
+            ),
+            starRewardsView.trailingAnchor.constraint(
+                equalTo: trailingAnchor,
+                constant: -8
+            ),
+        ])
+
+        // detailsButton
+        NSLayoutConstraint.activate([
+            detailsButton.topAnchor.constraint(
+                equalTo: starRewardsView.bottomAnchor,
+                constant: 16
+            ),
+            detailsButton.leadingAnchor.constraint(
+                equalTo: balanceView.leadingAnchor
+            ),
+            detailsButton.bottomAnchor.constraint(
+                equalTo: bottomAnchor,
+                constant: -16
+            ),
+            detailsButton.heightAnchor.constraint(equalToConstant: 40),
+        ])
+    }
+
+}
+
+// MARK: - Actions
+
+extension RewardTileView {
+
+    @objc func rewardsOptionsTapped(_ sender: UIButton) {
+        print(#function)
     }
 
 }

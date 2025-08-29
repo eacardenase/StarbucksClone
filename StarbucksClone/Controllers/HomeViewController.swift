@@ -33,9 +33,9 @@ class HomeViewController: UIViewController {
         _stackView.isLayoutMarginsRelativeArrangement = true
         _stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(
             top: 0,
-            leading: 8,
+            leading: 16,
             bottom: 16,
-            trailing: 8
+            trailing: 16
         )
 
         return _stackView
