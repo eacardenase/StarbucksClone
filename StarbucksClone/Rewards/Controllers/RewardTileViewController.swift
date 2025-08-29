@@ -15,7 +15,6 @@ class RewardTileViewController: UIViewController {
         let view = RewardTileView()
 
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemPink
 
         return view
     }()
