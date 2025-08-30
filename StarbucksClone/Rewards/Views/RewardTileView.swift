@@ -56,10 +56,9 @@ class RewardTileView: UIView {
     }()
 
     let rewardsGraphView: UIView = {
-        let view = UIView()
+        let view = RewardsGraphView()
 
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemRed.withAlphaComponent(0.3)
 
         return view
     }()
