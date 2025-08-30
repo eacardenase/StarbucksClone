@@ -32,8 +32,10 @@ class TileView: UIView {
             fatalError("Could not create font descriptor with bold trait.")
         }
 
-        label.font = UIFont(descriptor: fontDescriptor, size: 0)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(descriptor: fontDescriptor, size: 0)
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
 
         return label
     }()
