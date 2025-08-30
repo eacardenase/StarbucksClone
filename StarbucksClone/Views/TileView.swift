@@ -72,9 +72,7 @@ class TileView: UIView {
         return button
     }()
 
-    private var shadowLayer = CAShapeLayer()
     private var cornerRadius: CGFloat = 8
-    private var fillColor: UIColor = .systemBackground
 
     // MARK: - Initializers
 
@@ -101,6 +99,9 @@ class TileView: UIView {
 extension TileView {
 
     private func setupViews() {
+        backgroundColor = .systemBackground
+        layer.cornerRadius = cornerRadius
+
         addSubview(imageView)
         addSubview(titleLabel)
         addSubview(subtitleLabel)
@@ -160,16 +161,11 @@ extension TileView {
     }
 
     private func addShadow() {
-        shadowLayer.fillColor = fillColor.cgColor
-        shadowLayer.shadowColor = UIColor.label.cgColor
-        shadowLayer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        shadowLayer.shadowOpacity = 0.2
-        shadowLayer.shadowRadius = 1
-        shadowLayer.path =
+        layer.shadowColor = UIColor.label.cgColor
+        layer.shadowOffset = .zero
+        layer.shadowOpacity = 0.2
+        layer.shadowPath =
             UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
-
-        layer.insertSublayer(shadowLayer, at: 0)
-
     }
 
 }
