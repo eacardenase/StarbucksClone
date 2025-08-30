@@ -1,5 +1,5 @@
 //
-//  RewardTileView.swift
+//  RewardsTileView.swift
 //  StarbucksClone
 //
 //  Created by Edwin Cardenas on 8/27/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RewardTileView: UIView {
+class RewardsTileView: UIView {
 
     let balanceView: BalanceView = {
         let view = BalanceView()
@@ -130,7 +130,7 @@ class RewardTileView: UIView {
 
 // MARK: - Helpers
 
-extension RewardTileView {
+extension RewardsTileView {
 
     private func setupViews() {
         addSubview(balanceView)
@@ -161,11 +161,8 @@ extension RewardTileView {
                 equalTo: balanceView.bottomAnchor,
                 constant: 8
             ),
-            rewardsGraphView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            rewardsGraphView.widthAnchor.constraint(
-                equalTo: widthAnchor
-            ),
-            rewardsGraphView.heightAnchor.constraint(equalToConstant: 100),
+            rewardsGraphView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            rewardsGraphView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
 
         // starRewardsView
@@ -205,7 +202,7 @@ extension RewardTileView {
 
 // MARK: - Actions
 
-extension RewardTileView {
+extension RewardsTileView {
 
     @objc func rewardsOptionsTapped(_ sender: UIButton) {
         print(#function)
