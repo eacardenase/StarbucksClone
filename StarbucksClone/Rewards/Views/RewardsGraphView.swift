@@ -180,6 +180,7 @@ extension RewardsGraphView {
     }
 
     private func setupViews() {
+        translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(imageView)

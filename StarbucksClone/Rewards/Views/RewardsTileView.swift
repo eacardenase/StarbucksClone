@@ -55,22 +55,8 @@ class RewardsTileView: UIView {
         return button
     }()
 
-    let rewardsGraphView: UIView = {
-        let view = RewardsGraphView()
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        return view
-    }()
-
-    let starRewardsView: UIView = {
-        let view = UIView()
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-
-        return view
-    }()
+    let rewardsGraphView = RewardsGraphView()
+    let starRewardsView = StarRewardsView()
 
     let detailsButton: UIButton = {
         let button = UIButton(type: .system)
@@ -173,11 +159,9 @@ extension RewardsTileView {
             ),
             starRewardsView.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
-                constant: 8
             ),
             starRewardsView.trailingAnchor.constraint(
                 equalTo: trailingAnchor,
-                constant: -8
             ),
         ])
 
