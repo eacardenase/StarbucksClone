@@ -26,6 +26,7 @@ class BalanceView: UIView {
         }
 
         label.font = UIFont(descriptor: fontDescriptor, size: 0)
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         return label
     }()
@@ -52,6 +53,7 @@ class BalanceView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .preferredFont(forTextStyle: .footnote)
         label.text = "Star Balance"
+        label.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         return label
     }()
@@ -67,6 +69,7 @@ class BalanceView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
 }
 
 // MARK: - Helpers

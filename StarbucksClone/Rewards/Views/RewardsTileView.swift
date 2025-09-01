@@ -13,6 +13,7 @@ class RewardsTileView: UIView {
         let view = BalanceView()
 
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         return view
     }()
@@ -96,6 +97,13 @@ class RewardsTileView: UIView {
         return button
     }()
 
+    var heightConstraint = NSLayoutConstraint() {
+        didSet {
+            //            oldValue.isActive = false
+            //            heightConstraint.isActive = true
+        }
+    }
+
     // MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -151,6 +159,10 @@ extension RewardsTileView {
             rewardsGraphView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
 
+        heightConstraint = starRewardsView.heightAnchor.constraint(
+            equalToConstant: 0
+        )
+
         // starRewardsView
         NSLayoutConstraint.activate([
             starRewardsView.topAnchor.constraint(
@@ -163,6 +175,7 @@ extension RewardsTileView {
             starRewardsView.trailingAnchor.constraint(
                 equalTo: trailingAnchor,
             ),
+            heightConstraint,
         ])
 
         // detailsButton
@@ -189,7 +202,25 @@ extension RewardsTileView {
 extension RewardsTileView {
 
     @objc func rewardsOptionsTapped(_ sender: UIButton) {
-        print(#function)
+        if heightConstraint.constant == 0 {
+            UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
+                [unowned self] in
+                heightConstraint.constant = 270
+                starRewardsView.isHidden = false
+                starRewardsView.alpha = 1
+
+                layoutIfNeeded()
+            }.startAnimation()
+        } else {
+            UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
+                [unowned self] in
+                heightConstraint.constant = 0
+                starRewardsView.isHidden = true
+                starRewardsView.alpha = 0
+
+                layoutIfNeeded()
+            }.startAnimation()
+        }
     }
 
 }

@@ -192,6 +192,8 @@ extension RewardsGraphView {
             imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
+
+        setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 
 }

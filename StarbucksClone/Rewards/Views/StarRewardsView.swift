@@ -74,6 +74,7 @@ extension StarRewardsView {
         translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 10
         backgroundColor = .systemGroupedBackground
+        isHidden = true
 
         let stackView = UIStackView()
 
