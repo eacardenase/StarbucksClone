@@ -19,14 +19,19 @@ class RewardsTileView: UIView {
 
     let balanceView = BalanceView()
 
+    var buttonImage: UIImage? {
+        let imageConf = UIImage.SymbolConfiguration(scale: .small)
+        let imageName =
+            shouldCollapseStarRewardsView ? "chevron.down" : "chevron.up"
+
+        return UIImage(systemName: imageName, withConfiguration: imageConf)
+    }
+
     lazy var rewardsButton: UIButton = {
         let button = UIButton(type: .custom)
         var config = UIButton.Configuration.plain()
 
-        config.image = UIImage(systemName: "chevron.down")?
-            .withConfiguration(
-                UIImage.SymbolConfiguration(scale: .small)
-            )
+        config.image = buttonImage
         config.imagePlacement = .trailing
         config.imagePadding = 8
         config.baseForegroundColor = .label
@@ -208,6 +213,7 @@ extension RewardsTileView {
 
             shouldCollapseStarRewardsView.toggle()
 
+            rewardsButton.setImage(buttonImage, for: .normal)
             starRewardsViewHeightAnchor.constant =
                 shouldCollapseStarRewardsView
                 ? 0 : starRewardsView.stackView.frame.height
