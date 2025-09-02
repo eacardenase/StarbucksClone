@@ -9,13 +9,7 @@ import UIKit
 
 class RewardsTileView: UIView {
 
-    let balanceView: BalanceView = {
-        let view = BalanceView()
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        return view
-    }()
+    let balanceView = BalanceView()
 
     lazy var rewardsButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -56,7 +50,10 @@ class RewardsTileView: UIView {
     }()
 
     let rewardsGraphView = RewardsGraphView()
+
     let starRewardsView = StarRewardsView()
+    var starRewardsViewHeightAnchor = NSLayoutConstraint()
+    var shouldCollapseStarRewardsView = true
 
     let detailsButton: UIButton = {
         let button = UIButton(type: .system)
@@ -108,10 +105,6 @@ class RewardsTileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 100, height: 300)
-    }
-
 }
 
 // MARK: - Helpers
@@ -151,11 +144,14 @@ extension RewardsTileView {
             rewardsGraphView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
 
+        starRewardsViewHeightAnchor = starRewardsView.heightAnchor.constraint(
+            equalToConstant: 0
+        )
+
         // starRewardsView
         NSLayoutConstraint.activate([
             starRewardsView.topAnchor.constraint(
                 equalTo: rewardsGraphView.bottomAnchor,
-                constant: 8
             ),
             starRewardsView.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
@@ -163,6 +159,7 @@ extension RewardsTileView {
             starRewardsView.trailingAnchor.constraint(
                 equalTo: trailingAnchor,
             ),
+            starRewardsViewHeightAnchor,
         ])
 
         // detailsButton
@@ -189,7 +186,17 @@ extension RewardsTileView {
 extension RewardsTileView {
 
     @objc func rewardsOptionsTapped(_ sender: UIButton) {
-        print(#function)
+        UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
+            [unowned self] in
+
+            shouldCollapseStarRewardsView.toggle()
+
+            starRewardsViewHeightAnchor.constant =
+                shouldCollapseStarRewardsView
+                ? 0 : starRewardsView.stackView.frame.height
+
+            layoutSubviews()
+        }.startAnimation()
     }
 
 }

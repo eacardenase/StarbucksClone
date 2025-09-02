@@ -74,6 +74,8 @@ class BalanceView: UIView {
 extension BalanceView {
 
     private func setupViews() {
+        translatesAutoresizingMaskIntoConstraints = false
+
         addSubview(pointsLabel)
         addSubview(starImgeView)
         addSubview(starBalanceLabel)
