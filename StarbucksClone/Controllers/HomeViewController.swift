@@ -41,6 +41,42 @@ class HomeViewController: UIViewController {
         return _stackView
     }()
 
+    let scanButton: UIButton = {
+        var conf = UIButton.Configuration.filled()
+
+        conf.cornerStyle = .capsule
+        conf.baseBackgroundColor = .systemGreen
+        conf.contentInsets = NSDirectionalEdgeInsets(
+            top: 16,
+            leading: 32,
+            bottom: 16,
+            trailing: 32
+        )
+
+        conf.background.backgroundColorTransformer =
+            UIConfigurationColorTransformer({ color in
+                return .systemGreen
+            })
+
+        let button = UIButton(type: .system)
+        let attributedTitle = NSAttributedString(
+            string: "Scan in Store",
+            attributes: [
+                .font: UIFont.preferredFont(forTextStyle: .title3)
+            ]
+        )
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setAttributedTitle(
+            attributedTitle,
+            for: .normal
+        )
+
+        button.configuration = conf
+
+        return button
+    }()
+
     let rewardsViewController = RewardsTileViewController()
 
     lazy var tiles = [
@@ -108,6 +144,7 @@ extension HomeViewController {
 
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
+        view.addSubview(scanButton)
 
         for tile in tiles {
             addChild(tile)
@@ -163,11 +200,20 @@ extension HomeViewController {
                 equalTo: scrollView.trailingAnchor
             ),
             stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
         ])
 
-        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-            .isActive = true
+        // scanButton
+        NSLayoutConstraint.activate([
+            scanButton.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -16
+            ),
+            scanButton.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -16
+            ),
+        ])
     }
 
     private func setupNavBar() {
