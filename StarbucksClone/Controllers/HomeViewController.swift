@@ -41,8 +41,10 @@ class HomeViewController: UIViewController {
         return _stackView
     }()
 
-    let tiles = [
-        RewardsTileViewController(),
+    let rewardsViewController = RewardsTileViewController()
+
+    lazy var tiles = [
+        rewardsViewController,
         TileViewController(
             title: "Breakfast made meatless",
             subtitle: """
@@ -91,6 +93,8 @@ class HomeViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         setupViews()
+
+        rewardsViewController.delegate = self
     }
 
 }
@@ -215,6 +219,16 @@ extension HomeViewController: UIScrollViewDelegate {
 
             self.view.layoutIfNeeded()
         }.startAnimation()
+    }
+
+}
+
+// MARK: - RewardsTileViewDelegate
+
+extension HomeViewController: RewardsTileViewDelegate {
+
+    func expandableViewDidChange() {
+        self.view.layoutIfNeeded()
     }
 
 }

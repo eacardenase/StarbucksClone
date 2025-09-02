@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol RewardsTileViewDelegate: AnyObject {
+
+    func expandableViewDidChange()
+
+}
+
 class RewardsTileView: UIView {
+
+    weak var delegate: RewardsTileViewDelegate?
 
     let balanceView = BalanceView()
 
@@ -112,6 +120,8 @@ class RewardsTileView: UIView {
 extension RewardsTileView {
 
     private func setupViews() {
+        translatesAutoresizingMaskIntoConstraints = false
+
         addSubview(balanceView)
         addSubview(rewardsButton)
         addSubview(rewardsGraphView)
@@ -194,6 +204,8 @@ extension RewardsTileView {
             starRewardsViewHeightAnchor.constant =
                 shouldCollapseStarRewardsView
                 ? 0 : starRewardsView.stackView.frame.height
+
+            delegate?.expandableViewDidChange()
 
             layoutSubviews()
         }.startAnimation()
