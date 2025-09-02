@@ -7,16 +7,17 @@
 
 import UIKit
 
+protocol RewardsTileViewDelegate: AnyObject {
+
+    func expandableViewDidChange()
+
+}
+
 class RewardsTileView: UIView {
 
-    let balanceView: BalanceView = {
-        let view = BalanceView()
+    weak var delegate: RewardsTileViewDelegate?
 
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setContentHuggingPriority(.defaultHigh, for: .vertical)
-
-        return view
-    }()
+    let balanceView = BalanceView()
 
     lazy var rewardsButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -57,7 +58,10 @@ class RewardsTileView: UIView {
     }()
 
     let rewardsGraphView = RewardsGraphView()
+
     let starRewardsView = StarRewardsView()
+    var starRewardsViewHeightAnchor = NSLayoutConstraint()
+    var shouldCollapseStarRewardsView = true
 
     let detailsButton: UIButton = {
         let button = UIButton(type: .system)
@@ -116,10 +120,6 @@ class RewardsTileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 100, height: 300)
-    }
-
 }
 
 // MARK: - Helpers
@@ -127,6 +127,8 @@ class RewardsTileView: UIView {
 extension RewardsTileView {
 
     private func setupViews() {
+        translatesAutoresizingMaskIntoConstraints = false
+
         addSubview(balanceView)
         addSubview(rewardsButton)
         addSubview(rewardsGraphView)
@@ -159,7 +161,7 @@ extension RewardsTileView {
             rewardsGraphView.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
 
-        heightConstraint = starRewardsView.heightAnchor.constraint(
+        starRewardsViewHeightAnchor = starRewardsView.heightAnchor.constraint(
             equalToConstant: 0
         )
 
@@ -167,7 +169,6 @@ extension RewardsTileView {
         NSLayoutConstraint.activate([
             starRewardsView.topAnchor.constraint(
                 equalTo: rewardsGraphView.bottomAnchor,
-                constant: 8
             ),
             starRewardsView.leadingAnchor.constraint(
                 equalTo: leadingAnchor,
@@ -175,7 +176,7 @@ extension RewardsTileView {
             starRewardsView.trailingAnchor.constraint(
                 equalTo: trailingAnchor,
             ),
-            heightConstraint,
+            starRewardsViewHeightAnchor,
         ])
 
         // detailsButton
@@ -202,25 +203,19 @@ extension RewardsTileView {
 extension RewardsTileView {
 
     @objc func rewardsOptionsTapped(_ sender: UIButton) {
-        if heightConstraint.constant == 0 {
-            UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
-                [unowned self] in
-                heightConstraint.constant = 270
-                starRewardsView.isHidden = false
-                starRewardsView.alpha = 1
+        UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
+            [unowned self] in
 
-                layoutIfNeeded()
-            }.startAnimation()
-        } else {
-            UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
-                [unowned self] in
-                heightConstraint.constant = 0
-                starRewardsView.isHidden = true
-                starRewardsView.alpha = 0
+            shouldCollapseStarRewardsView.toggle()
 
-                layoutIfNeeded()
-            }.startAnimation()
-        }
+            starRewardsViewHeightAnchor.constant =
+                shouldCollapseStarRewardsView
+                ? 0 : starRewardsView.stackView.frame.height
+
+            delegate?.expandableViewDidChange()
+
+            layoutSubviews()
+        }.startAnimation()
     }
 
 }

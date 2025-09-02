@@ -52,6 +52,8 @@ class StarRewardsView: UIView {
         ),
     ]
 
+    let stackView = UIStackView()
+
     // MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -74,9 +76,7 @@ extension StarRewardsView {
         translatesAutoresizingMaskIntoConstraints = false
         layer.cornerRadius = 10
         backgroundColor = .systemGroupedBackground
-        isHidden = true
-
-        let stackView = UIStackView()
+        clipsToBounds = true
 
         stackView.addArrangedSubview(label)
 
@@ -108,7 +108,6 @@ extension StarRewardsView {
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 

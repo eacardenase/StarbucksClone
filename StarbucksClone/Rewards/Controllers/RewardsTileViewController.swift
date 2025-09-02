@@ -11,42 +11,27 @@ class RewardsTileViewController: UIViewController {
 
     // MARK: - Properties
 
-    let rewardTileView: UIView = {
-        let view = RewardsTileView()
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-
-        return view
-    }()
+    let rewardTileView = RewardsTileView()
+    weak var delegate: RewardsTileViewDelegate?
 
     // MARK: - View Lifecycle
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func loadView() {
+        let rewardsView = RewardsTileView()
 
-        setupViews()
+        rewardsView.delegate = self
+
+        view = rewardsView
     }
 
 }
 
-// MARK: - Helpers
+// MARK: - RewardsTileViewDelegate
 
-extension RewardsTileViewController {
+extension RewardsTileViewController: RewardsTileViewDelegate {
 
-    private func setupViews() {
-        view.addSubview(rewardTileView)
-
-        // rewardTileView
-        NSLayoutConstraint.activate([
-            rewardTileView.topAnchor.constraint(equalTo: view.topAnchor),
-            rewardTileView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor
-            ),
-            rewardTileView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor
-            ),
-            rewardTileView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
+    func expandableViewDidChange() {
+        delegate?.expandableViewDidChange()
     }
 
 }
