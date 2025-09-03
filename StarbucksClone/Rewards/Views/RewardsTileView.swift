@@ -213,8 +213,6 @@ extension RewardsTileView {
             guard let self else { return }
 
             self.shouldCollapseStarRewardsView.toggle()
-
-            self.rewardsButton.setImage(self.buttonImage, for: .normal)
             self.starRewardsViewHeightAnchor.constant =
                 self.shouldCollapseStarRewardsView
                 ? 0 : self.starRewardsView.stackView.frame.height
@@ -223,6 +221,14 @@ extension RewardsTileView {
 
             self.layoutIfNeeded()
         }.startAnimation()
+
+        UIView.transition(
+            with: self.rewardsButton,
+            duration: 0.5,
+            options: .transitionCrossDissolve
+        ) {
+            self.rewardsButton.setImage(self.buttonImage, for: .normal)
+        }
     }
 
 }
