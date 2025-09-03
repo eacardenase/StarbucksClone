@@ -209,18 +209,19 @@ extension RewardsTileView {
 
     @objc func rewardsOptionsTapped(_ sender: UIButton) {
         UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut) {
-            [unowned self] in
+            [weak self] in
+            guard let self else { return }
 
-            shouldCollapseStarRewardsView.toggle()
+            self.shouldCollapseStarRewardsView.toggle()
 
-            rewardsButton.setImage(buttonImage, for: .normal)
-            starRewardsViewHeightAnchor.constant =
-                shouldCollapseStarRewardsView
-                ? 0 : starRewardsView.stackView.frame.height
+            self.rewardsButton.setImage(self.buttonImage, for: .normal)
+            self.starRewardsViewHeightAnchor.constant =
+                self.shouldCollapseStarRewardsView
+                ? 0 : self.starRewardsView.stackView.frame.height
 
-            delegate?.expandableViewDidChange()
+            self.delegate?.expandableViewDidChange()
 
-            layoutSubviews()
+            self.layoutIfNeeded()
         }.startAnimation()
     }
 
