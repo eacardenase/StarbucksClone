@@ -11,7 +11,7 @@ class HistoryViewController: UITableViewController {
 
     // MARK: - Properties
 
-    var viewModel: HistoryViewModel?
+    var viewModel = HistoryViewModel()
 
     // MARK: - View Lifecycle
 
@@ -36,21 +36,21 @@ class HistoryViewController: UITableViewController {
 extension HistoryViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel?.sections.count ?? 0
+        return viewModel.sections.count
     }
 
     override func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return viewModel?.sections[section].transactions.count ?? 0
+        return viewModel.sections[section].transactions.count
     }
 
     override func tableView(
         _ tableView: UITableView,
         titleForHeaderInSection section: Int
     ) -> String? {
-        return viewModel?.sections[section].title
+        return viewModel.sections[section].title
     }
 
     override func tableView(
@@ -66,8 +66,8 @@ extension HistoryViewController {
             fatalError("Could not type cast cell into HistoryTableViewCell")
         }
 
-        let section = viewModel?.sections[indexPath.section]
-        let transaction = section?.transactions[indexPath.row]
+        let section = viewModel.sections[indexPath.section]
+        let transaction = section.transactions[indexPath.row]
 
         cell.transaction = transaction
         cell.selectionStyle = .none
@@ -87,9 +87,7 @@ extension HistoryViewController {
 
             switch result {
             case .success(let transactions):
-                self.viewModel = HistoryViewModel(
-                    withTransactions: transactions
-                )
+                self.viewModel.transactions = transactions
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error.localizedDescription)

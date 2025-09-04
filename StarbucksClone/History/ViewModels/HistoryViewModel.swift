@@ -9,19 +9,20 @@ import Foundation
 
 struct HistoryViewModel {
 
-    var sections: [HistorySection]
+    var sections = [HistorySection]()
+    var transactions = [Transaction]() {
+        didSet {
+            sections = Dictionary(grouping: transactions) {
+                Calendar.current.component(.month, from: $0.date)
+            }.sorted { $0.key > $1.key }
+                .map {
+                    (monthIndex, transactions) -> HistorySection in
 
-    init(withTransactions transactions: [Transaction]) {
-        sections = Dictionary(grouping: transactions) {
-            Calendar.current.component(.month, from: $0.date)
-        }.sorted { $0.key > $1.key }
-            .map {
-                (monthIndex, transactions) -> HistorySection in
-
-                return HistorySection(
-                    title: Calendar.current.monthSymbols[monthIndex - 1],
-                    transactions: transactions
-                )
-            }
+                    return HistorySection(
+                        title: Calendar.current.monthSymbols[monthIndex - 1],
+                        transactions: transactions
+                    )
+                }
+        }
     }
 }
