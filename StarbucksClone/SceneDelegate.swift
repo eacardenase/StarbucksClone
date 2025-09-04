@@ -58,7 +58,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             storeNavigationController,
         ]
 
-        window?.rootViewController = tabBar
+        window?.rootViewController = HistoryViewController()
         window?.makeKeyAndVisible()
     }
 
