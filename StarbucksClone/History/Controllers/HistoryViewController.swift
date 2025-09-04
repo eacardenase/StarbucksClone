@@ -11,16 +11,14 @@ class HistoryViewController: UITableViewController {
 
     // MARK: - Properties
 
-    var sections = [HistorySection]()
+    var viewModel: HistoryViewModel?
 
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        data()
-
-        navigationItem.title = "Games"
+        fetchTransactions()
 
         tableView.separatorStyle = .none
         tableView.register(
@@ -38,21 +36,21 @@ class HistoryViewController: UITableViewController {
 extension HistoryViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return viewModel?.sections.count ?? 0
     }
 
     override func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return sections[section].transactions.count
+        return viewModel?.sections[section].transactions.count ?? 0
     }
 
     override func tableView(
         _ tableView: UITableView,
         titleForHeaderInSection section: Int
     ) -> String? {
-        return sections[section].title
+        return viewModel?.sections[section].title
     }
 
     override func tableView(
@@ -68,8 +66,8 @@ extension HistoryViewController {
             fatalError("Could not type cast cell into HistoryTableViewCell")
         }
 
-        let section = sections[indexPath.section]
-        let transaction = section.transactions[indexPath.row]
+        let section = viewModel?.sections[indexPath.section]
+        let transaction = section?.transactions[indexPath.row]
 
         cell.transaction = transaction
         cell.selectionStyle = .none
@@ -83,62 +81,20 @@ extension HistoryViewController {
 
 extension HistoryViewController {
 
-    private func data() {
-        let firstSection = HistorySection(
-            title: "July",
-            transactions: [
-                Transaction(
-                    id: 1,
-                    type: "redeemable",
-                    amount: "1",
-                    date: Date()
-                )
-            ]
-        )
-        let secondSection = HistorySection(
-            title: "June",
-            transactions: [
-                Transaction(
-                    id: 1,
-                    type: "redeemable",
-                    amount: "2",
-                    date: Date()
-                ),
-                Transaction(
-                    id: 1,
-                    type: "redeemable",
-                    amount: "22",
-                    date: Date()
-                ),
-            ]
-        )
-        let thirdSection = HistorySection(
-            title: "May",
-            transactions: [
-                Transaction(
-                    id: 1,
-                    type: "redeemable",
-                    amount: "3",
-                    date: Date()
-                ),
-                Transaction(
-                    id: 1,
-                    type: "redeemable",
-                    amount: "33",
-                    date: Date()
-                ),
-                Transaction(
-                    id: 1,
-                    type: "redeemable",
-                    amount: "333",
-                    date: Date()
-                ),
-            ]
-        )
+    private func fetchTransactions() {
+        HistoryService.fetchTransactions { [weak self] result in
+            guard let self else { return }
 
-        sections.append(firstSection)
-        sections.append(secondSection)
-        sections.append(thirdSection)
+            switch result {
+            case .success(let transactions):
+                self.viewModel = HistoryViewModel(
+                    withTransactions: transactions
+                )
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
 }

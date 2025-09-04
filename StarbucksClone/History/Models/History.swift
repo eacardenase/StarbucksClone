@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct History: Codable {
+
+    let transactions: [Transaction]
+
+}
+
 struct HistorySection {
 
     let title: String
