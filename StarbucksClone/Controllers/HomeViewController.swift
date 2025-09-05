@@ -269,6 +269,7 @@ extension HomeViewController: UIScrollViewDelegate {
 
         UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
             self.homeHeaderView.inboxButton.alpha = y < buttonHeight ? 1 : 0
+            self.homeHeaderView.historyButton.alpha = y < buttonHeight ? 1 : 0
 
             self.homeHeaderViewTopConstraint.constant =
                 shouldSnapButton
