@@ -43,14 +43,25 @@ class HomeViewController: UIViewController {
 
     let scanButton: UIButton = {
         var conf = UIButton.Configuration.filled()
+        var imageConf = UIImage.SymbolConfiguration(
+            pointSize: 25,
+            weight: .regular,
+            scale: .large
+        )
+        var image = UIImage(
+            systemName: "qrcode.viewfinder",
+            withConfiguration: imageConf
+        )
 
         conf.cornerStyle = .capsule
         conf.baseBackgroundColor = .systemGreen
+        conf.image = image
+        conf.imagePadding = 8
         conf.contentInsets = NSDirectionalEdgeInsets(
             top: 16,
-            leading: 32,
+            leading: 24,
             bottom: 16,
-            trailing: 32
+            trailing: 24
         )
 
         conf.background.backgroundColorTransformer =
@@ -284,7 +295,7 @@ extension HomeViewController: RewardsTileViewDelegate {
 
 extension HomeViewController: HomeHeaderViewDelegate {
 
-    func historyViewTapped() {
+    func didTapHistoryButton() {
         let navController = UINavigationController(
             rootViewController: HistoryViewController()
         )

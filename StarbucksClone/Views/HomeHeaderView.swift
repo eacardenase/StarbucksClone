@@ -9,7 +9,7 @@ import UIKit
 
 protocol HomeHeaderViewDelegate: AnyObject {
 
-    func historyViewTapped()
+    func didTapHistoryButton()
 
 }
 
@@ -35,10 +35,10 @@ class HomeHeaderView: UIView {
         let button = UIButton(type: .system)
 
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Inbox", for: .normal)
-        button.setTitleColor(.label, for: .normal)
 
         var conf = UIButton.Configuration.plain()
+        conf.title = "Inbox"
+        conf.baseForegroundColor = .systemGray
         conf.imagePadding = 8
         conf.contentInsets = NSDirectionalEdgeInsets(
             top: 0,
@@ -64,10 +64,10 @@ class HomeHeaderView: UIView {
         let button = UIButton(type: .system)
 
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("History", for: .normal)
-        button.setTitleColor(.label, for: .normal)
 
         var conf = UIButton.Configuration.plain()
+        conf.title = "History"
+        conf.baseForegroundColor = .systemGray
         conf.imagePadding = 8
         conf.contentInsets = NSDirectionalEdgeInsets(
             top: 0,
@@ -160,7 +160,7 @@ extension HomeHeaderView {
 extension HomeHeaderView {
 
     @objc func historyButtonTapped(_ sender: UIButton) {
-        delegate?.historyViewTapped()
+        delegate?.didTapHistoryButton()
     }
 
 }
