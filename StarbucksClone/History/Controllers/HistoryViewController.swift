@@ -18,6 +18,8 @@ class HistoryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "History"
+        
         fetchTransactions()
 
         tableView.separatorStyle = .none

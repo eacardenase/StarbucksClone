@@ -130,6 +130,7 @@ class HomeViewController: UIViewController {
 
         setupViews()
 
+        homeHeaderView.delegate = self
         rewardsViewController.delegate = self
     }
 
@@ -275,6 +276,25 @@ extension HomeViewController: RewardsTileViewDelegate {
 
     func expandableViewDidChange() {
         self.view.layoutIfNeeded()
+    }
+
+}
+
+// MARK: - HomeHeaderViewDelegate
+
+extension HomeViewController: HomeHeaderViewDelegate {
+
+    func historyViewTapped() {
+        let navController = UINavigationController(
+            rootViewController: HistoryViewController()
+        )
+
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+        }
+
+        present(navController, animated: true)
     }
 
 }

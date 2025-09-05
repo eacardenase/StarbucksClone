@@ -7,9 +7,17 @@
 
 import UIKit
 
+protocol HomeHeaderViewDelegate: AnyObject {
+
+    func historyViewTapped()
+
+}
+
 class HomeHeaderView: UIView {
 
     // MARK: - Properties
+
+    weak var delegate: HomeHeaderViewDelegate?
 
     let greetingLabel: UILabel = {
         let label = UILabel()
@@ -31,7 +39,7 @@ class HomeHeaderView: UIView {
         button.setTitleColor(.label, for: .normal)
 
         var conf = UIButton.Configuration.plain()
-        conf.imagePadding = 16
+        conf.imagePadding = 8
         conf.contentInsets = NSDirectionalEdgeInsets(
             top: 0,
             leading: 0,
@@ -47,6 +55,41 @@ class HomeHeaderView: UIView {
                 renderingMode: .alwaysOriginal
             ),
             for: .normal
+        )
+
+        return button
+    }()
+
+    lazy var historyButton: UIButton = {
+        let button = UIButton(type: .system)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("History", for: .normal)
+        button.setTitleColor(.label, for: .normal)
+
+        var conf = UIButton.Configuration.plain()
+        conf.imagePadding = 8
+        conf.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 0,
+            trailing: 0
+        )
+
+        button.configuration = conf
+
+        button.setImage(
+            UIImage(systemName: "calendar")?.withTintColor(
+                .systemGray,
+                renderingMode: .alwaysOriginal
+            ),
+            for: .normal
+        )
+
+        button.addTarget(
+            self,
+            action: #selector(historyButtonTapped),
+            for: .touchUpInside
         )
 
         return button
@@ -75,13 +118,16 @@ extension HomeHeaderView {
 
         addSubview(greetingLabel)
         addSubview(inboxButton)
+        addSubview(historyButton)
 
+        // greetingLabel
         NSLayoutConstraint.activate([
             greetingLabel.topAnchor.constraint(equalTo: topAnchor),
             greetingLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             greetingLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
 
+        // inboxButton
         NSLayoutConstraint.activate([
             inboxButton.topAnchor.constraint(
                 equalTo: greetingLabel.bottomAnchor,
@@ -93,6 +139,28 @@ extension HomeHeaderView {
                 constant: -8
             ),
         ])
+
+        // historyButton
+        NSLayoutConstraint.activate([
+            historyButton.topAnchor.constraint(equalTo: inboxButton.topAnchor),
+            historyButton.leadingAnchor.constraint(
+                equalTo: inboxButton.trailingAnchor,
+                constant: 24
+            ),
+            historyButton.bottomAnchor.constraint(
+                equalTo: inboxButton.bottomAnchor
+            ),
+        ])
+    }
+
+}
+
+// MARK: - Actions
+
+extension HomeHeaderView {
+
+    @objc func historyButtonTapped(_ sender: UIButton) {
+        delegate?.historyViewTapped()
     }
 
 }
