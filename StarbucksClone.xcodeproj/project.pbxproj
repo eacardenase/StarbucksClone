@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A5C370012E6CBC9400FD04C3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A5C370002E6CBC9400FD04C3 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		A5144C332E579495008628F5 /* StarbucksClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarbucksClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5C370002E6CBC9400FD04C3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -45,6 +50,7 @@
 		A5144C2A2E579495008628F5 = {
 			isa = PBXGroup;
 			children = (
+				A5C370002E6CBC9400FD04C3 /* README.md */,
 				A5144C352E579495008628F5 /* StarbucksClone */,
 				A5144C342E579495008628F5 /* Products */,
 			);
@@ -122,6 +128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5C370012E6CBC9400FD04C3 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
