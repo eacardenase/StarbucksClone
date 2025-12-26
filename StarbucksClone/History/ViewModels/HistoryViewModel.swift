@@ -12,9 +12,12 @@ struct HistoryViewModel {
     var sections = [HistorySection]()
     var transactions = [Transaction]() {
         didSet {
-            sections = Dictionary(grouping: transactions) {
+            let transactionsDictionary = Dictionary(grouping: transactions) {
                 Calendar.current.component(.month, from: $0.date)
             }.sorted { $0.key > $1.key }
+
+            sections =
+                transactionsDictionary
                 .map {
                     (monthIndex, transactions) -> HistorySection in
 
